@@ -1,0 +1,13 @@
+.FormBuilder {
+    border: 5px dashed lightskyblue;
+    min-height: 500px;
+    width: 500px;
+}
+
+.NewElementSelector {
+    display: none;
+}
+
+.NewElementSelector.Visible {
+    display: block;
+}

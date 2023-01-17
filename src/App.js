@@ -1,7 +1,12 @@
 import './App.css';
+import { FormBuilder } from './FormBuilder'
 
 function App() {
- return <h1>Hello World!</h1>
+ return (
+    <div className='App'>
+        <FormBuilder />
+    </div>
+ )
 }
 
 export default App;
