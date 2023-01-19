@@ -11,3 +11,8 @@
 .NewElementSelector.Visible {
     display: block;
 }
+
+.InputsList {
+    padding: 0;
+    display: flex;
+}

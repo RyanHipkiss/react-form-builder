@@ -11,19 +11,19 @@ export function FormBuilder() {
         setShowNewElementSelector(!showNewElementSelector)
     }
 
-    const addFieldToForm = fieldType => {
-        setFields([...fields, fieldType])
+    const addFieldToForm = (type, name, label) => {
+        setFields([...fields, {type, name, label}])
     }
 
     return (
         <>
             <div className='FormBuilder'>
                 { fields && 
-                    <ul>
+                    <ul className='InputsList'>
                         { fields.map(field => {
-                            switch(field) {
+                            switch(field.type) {
                                 case 'input':
-                                    return <Input/>
+                                    return <Input name={field.name} label={field.label}/>
                                 default:
                                     break;
                             }
