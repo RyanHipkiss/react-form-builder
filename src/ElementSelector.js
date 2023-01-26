@@ -1,6 +1,6 @@
 export function ElementSelector({addFieldToForm}) {
     const addField = event => {
-        addFieldToForm(event.target.dataset.fieldType, 'Name of Field', 'Label of Field')
+        addFieldToForm(event.target.dataset.fieldType, null, null)
     }
 
     return (

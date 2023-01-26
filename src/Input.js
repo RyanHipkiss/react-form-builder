@@ -1,13 +1,19 @@
+import { useEffect } from 'react';
 import './Input.css'
-import { useInputValidation } from './useInputValidation'
+import { useInputValidation } from './useInputValidation';
 
-export function Input({ name, label }) {
-   const { state, handleInputChange} = useInputValidation();
+export function Input({ position, updateField, removeField }) {
+    const { state, handleInputChange} = useInputValidation();
 
+    useEffect(() => {
+        updateField( position, state.value)
+    }, [state, updateField, position])
+   
     return (
         <>
-            <input type="text" className='Input' name={name} value={state.value} onChange={handleInputChange}/>
-            {!state.valid && <p>{state.error}</p>}
+            <label for="name">Name of field</label>
+            <input type="text" name="name" onChange={handleInputChange}/>
+            <button onClick={e => removeField(position)}>Remove me!</button>
         </>
     )
 }
