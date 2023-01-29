@@ -1,40 +1,48 @@
-import { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './FormBuilder.css'
 import { ElementSelector } from './ElementSelector'
 import { Input } from './Input'
+import { useFieldHandler } from './useFieldHandler'
 
 export function FormBuilder() {
     const [showNewElementSelector, setShowNewElementSelector] = useState(false)
-    const [fields, setFields] = useState([])
-    const fieldValues = useRef([])
+    const {
+        fields,
+        addField,
+        updateField,
+        removeField,
+        saveFields
+    } = useFieldHandler()
+    const isFormSaved = useRef(false)
 
     const toggleNewElementSelector = event => {
         setShowNewElementSelector(!showNewElementSelector)
     }
 
-    const addFieldToForm = (type, name, label) => {
-        setFields([...fields, {type, name, label}])
+    const renderField = (field, index) => {
+        switch(field.type) {
+            case 'input':
+                return <Input position={index} updateField={updateField} removeField={removeField} />
+            default:
+                return <></>
+        }
     }
 
-    const updateField = (position, label) => {
-        fieldValues.current = fields.map((field, index) => {
-            if (index === position) {
-                field.label = label
-                field.name = label
-            }
-
-            return field
-        })
+    const handleFormSave = () => {
+        isFormSaved.current = true
+        saveFields()
     }
 
-    const saveForm = event => {
-        setFields(fieldValues.current)
-    }
+    /**
+     * @todo
+     * 
+     * What should happen when the form gets saved?
+     */
+    useEffect(() => {
+        if (!isFormSaved.current) return
 
-    const removeField = (position) => {
-        fieldValues.current = fields.filter((field, index) => (index !== position))
-        setFields(fields.map((field, index) => (index !== position)))
-    }
+        console.log('form has been saved.')
+    }, [fields, isFormSaved])
 
     return (
         <>
@@ -42,19 +50,16 @@ export function FormBuilder() {
                 { fields && 
                     <ul className='InputsList'>
                         { fields.map((field, index) => {
-                            switch(field.type) {
-                                case 'input':
-                                    return <Input position={index} updateField={updateField} removeField={removeField} />
-                                default:
-                                    return <></>
-                            }
+                            return (<li key={index}>
+                                {renderField(field, index)}
+                            </li>)
                         })}
                     </ul>
                 }
-                { fields && <button onClick={saveForm}>Save form!</button>}
+                { fields && <button onClick={() => handleFormSave()}>Save form!</button>}
                 <p onClick={toggleNewElementSelector} className='NewElementToggle'>Add element</p>
             </div>
-            {showNewElementSelector && <ElementSelector addFieldToForm={addFieldToForm}/>}
+            {showNewElementSelector && <ElementSelector addFieldToForm={addField}/>}
         </>
     )
 }

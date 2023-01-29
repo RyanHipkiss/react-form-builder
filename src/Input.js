@@ -11,7 +11,7 @@ export function Input({ position, updateField, removeField }) {
    
     return (
         <>
-            <label for="name">Name of field</label>
+            <label htmlFor="name">Name of field</label>
             <input type="text" name="name" onChange={handleInputChange}/>
             <button onClick={e => removeField(position)}>Remove me!</button>
         </>
