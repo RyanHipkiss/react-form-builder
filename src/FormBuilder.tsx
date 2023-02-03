@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react'
 import './FormBuilder.css'
 import { ElementSelector } from './ElementSelector'
 import { Input } from './Input'
-import { useFieldHandler } from './useFieldHandler'
+import { FieldType, useFieldHandler } from './useFieldHandler'
 
 export function FormBuilder() {
-    const [showNewElementSelector, setShowNewElementSelector] = useState(false)
+    const [showNewElementSelector, setShowNewElementSelector] = useState<boolean>(false)
     const {
         fields,
         addField,
@@ -13,13 +13,13 @@ export function FormBuilder() {
         removeField,
         saveFields
     } = useFieldHandler()
-    const isFormSaved = useRef(false)
+    const isFormSaved = useRef<boolean>(false)
 
-    const toggleNewElementSelector = event => {
+    const toggleNewElementSelector = () => {
         setShowNewElementSelector(!showNewElementSelector)
     }
 
-    const renderField = (field, index) => {
+    const renderField = (field: FieldType, index: number) => {
         switch(field.type) {
             case 'input':
                 return <Input position={index} updateField={updateField} removeField={removeField} />
@@ -46,10 +46,10 @@ export function FormBuilder() {
 
     return (
         <>
-            <div className='FormBuilder'>
+            <div className='FormBuilder' data-testid="FormBuilder">
                 { fields && 
                     <ul className='InputsList'>
-                        { fields.map((field, index) => {
+                        { fields.map((field: FieldType, index: number) => {
                             return (<li key={index}>
                                 {renderField(field, index)}
                             </li>)

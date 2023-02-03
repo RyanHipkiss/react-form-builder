@@ -1,8 +1,14 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './Input.css'
 import { useInputValidation } from './useInputValidation';
 
-export function Input({ position, updateField, removeField }) {
+type InputProps = {
+    position: number,
+    updateField: (position: number, value: string) => void,
+    removeField: (position: number) => void
+}
+export function Input(props: InputProps) {
+    const { position, updateField, removeField} = props
     const { state, handleInputChange} = useInputValidation();
 
     useEffect(() => {
@@ -13,7 +19,7 @@ export function Input({ position, updateField, removeField }) {
         <>
             <label htmlFor="name">Name of field</label>
             <input type="text" name="name" onChange={handleInputChange}/>
-            <button onClick={e => removeField(position)}>Remove me!</button>
+            <button onClick={() => removeField(position)}>Remove me!</button>
         </>
     )
 }
