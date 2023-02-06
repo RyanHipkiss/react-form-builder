@@ -16,10 +16,10 @@ export function Input(props: InputProps) {
     }, [state, updateField, position])
    
     return (
-        <>
+        <div data-testid='InputElementWrapper'>
             <label htmlFor="name">Name of field</label>
             <input type="text" name="name" onChange={handleInputChange}/>
-            <button onClick={() => removeField(position)}>Remove me!</button>
-        </>
+            <button onClick={() => removeField(position)} data-testid='RemoveInputElement'>Remove me!</button>
+        </div>
     )
 }

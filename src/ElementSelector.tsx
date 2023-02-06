@@ -12,8 +12,8 @@ export function ElementSelector(props: Props) {
     }
 
     return (
-        <ul>
-            <li onClick={addField} data-field-type="input">Input</li>
+        <ul data-testid='ElementSelector'>
+            <li onClick={addField} data-field-type="input" data-testid='InputField'>Input</li>
         </ul>
     )
 }

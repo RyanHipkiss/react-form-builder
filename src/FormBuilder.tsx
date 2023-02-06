@@ -40,15 +40,13 @@ export function FormBuilder() {
      */
     useEffect(() => {
         if (!isFormSaved.current) return
-
-        console.log('form has been saved.')
     }, [fields, isFormSaved])
 
     return (
         <>
-            <div className='FormBuilder' data-testid="FormBuilder">
+            <div className='FormBuilder' data-testid='FormBuilder'>
                 { fields && 
-                    <ul className='InputsList'>
+                    <ul className='InputsList' data-testid='InputsList'>
                         { fields.map((field: FieldType, index: number) => {
                             return (<li key={index}>
                                 {renderField(field, index)}
@@ -56,10 +54,11 @@ export function FormBuilder() {
                         })}
                     </ul>
                 }
-                { fields && <button onClick={() => handleFormSave()}>Save form!</button>}
-                <p onClick={toggleNewElementSelector} className='NewElementToggle'>Add element</p>
+                { fields && <button onClick={() => handleFormSave()} data-testid='SaveTheForm'>Save form!</button>}
+                <p onClick={toggleNewElementSelector} className='NewElementToggle' data-testid='AddElement'>Add element</p>
             </div>
             {showNewElementSelector && <ElementSelector addFieldToForm={addField}/>}
+            {isFormSaved.current && <p data-testid='SavedForm'>Form has been saved.</p>}
         </>
     )
 }
